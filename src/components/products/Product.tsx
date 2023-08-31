@@ -4,6 +4,9 @@ import { ProductType } from "../../types/productTypes";
 import { deliveryTime } from "../../utils/deliveryTime";
 import { formatPrice } from "../../utils/formatPrice";
 
+import { BsCartPlus } from "react-icons/bs";
+import { AiOutlineEdit } from "react-icons/ai";
+
 interface ProductProps {
   product: ProductType;
 }
@@ -15,9 +18,15 @@ export default function Product({ product }: ProductProps) {
     <StContainer>
       <StImg src={product.main_image_url} size={IMG_SIZE} />
       <StInfoWrap>
-        <StInfo bold={true} fontSize="1.5rem">
-          {product.product_name}
-        </StInfo>
+        <StTitleWrap>
+          <StInfo bold={true} fontSize="1.5rem">
+            {product.product_name}
+          </StInfo>
+          <StButtonWrap>
+            <BsCartPlus cursor="pointer" />
+            <AiOutlineEdit cursor="pointer" />
+          </StButtonWrap>
+        </StTitleWrap>
         <StInfo fontSize="1.1rem">
           예상 배송 기간 : {deliveryTime(product.prev_delivery_times)}일
         </StInfo>
@@ -45,10 +54,26 @@ const StImg = styled.img<{ size: string }>`
 
 const StInfoWrap = styled.div`
   padding: 0.5rem;
+  width: 100%;
+`;
+
+const StTitleWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StInfo = styled.p<{ bold?: boolean; fontSize?: string }>`
   ${(props) => props.bold && "font-weight: bold"};
   ${(props) => props.fontSize && `font-size: ${props.fontSize}`};
   margin-bottom: 0.5rem;
+`;
+
+const StButtonWrap = styled.div`
+  font-size: 1.5rem;
+  width: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

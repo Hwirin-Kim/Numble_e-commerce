@@ -18,8 +18,6 @@ export default function ProductsPage() {
     return state.products;
   });
 
-  console.log(productsList);
-
   return (
     <StContainer>
       <StGrid>

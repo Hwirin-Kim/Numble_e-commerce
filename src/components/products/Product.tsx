@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { ProductType } from "../../types/productTypes";
 import { deliveryTime } from "../../utils/deliveryTime";
@@ -6,6 +6,8 @@ import { formatPrice } from "../../utils/formatPrice";
 
 import { BsCartPlus } from "react-icons/bs";
 import { AiOutlineEdit } from "react-icons/ai";
+import Modal from "../UIelements/Modal";
+import EditProduct from "./EditProduct";
 
 interface ProductProps {
   product: ProductType;
@@ -13,7 +15,9 @@ interface ProductProps {
 
 export default function Product({ product }: ProductProps) {
   const IMG_SIZE = "240px";
-
+  console.log(product);
+  const [editData, SetEditData] = useState(product);
+  const [onEdit, setOnEdit] = useState(false);
   return (
     <StContainer>
       <StImg src={product.main_image_url} size={IMG_SIZE} />
@@ -23,7 +27,7 @@ export default function Product({ product }: ProductProps) {
             {product.product_name}
           </StInfo>
           <StButtonWrap>
-            <BsCartPlus cursor="pointer" />
+            <BsCartPlus onClick={() => setOnEdit(true)} cursor="pointer" />
             <AiOutlineEdit cursor="pointer" />
           </StButtonWrap>
         </StTitleWrap>
@@ -36,6 +40,11 @@ export default function Product({ product }: ProductProps) {
         </StInfo>
         <StInfo fontSize="1.1rem">{product.description}</StInfo>
       </StInfoWrap>
+      {onEdit && (
+        <Modal closeModal={() => setOnEdit(false)}>
+          <EditProduct id={product.product_no} />
+        </Modal>
+      )}
     </StContainer>
   );
 }

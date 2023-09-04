@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ProductsArrayType } from "../../types/productTypes";
+import { ProductsArrayType, ProductType } from "../../types/productTypes";
 
 type InitialState = {
   products: ProductsArrayType;
@@ -43,8 +43,15 @@ const productsSlice = createSlice({
       state.totalItems = sortedProducts.length;
       state.itemsPerPage = itemsPerPage;
     },
+    productEdit: (
+      state,
+      action: PayloadAction<{ id: number; product: ProductType }>
+    ) => {
+      const productId = action.payload;
+      console.log(action.payload.product);
+    },
   },
 });
 
-export const { dataFetching } = productsSlice.actions;
+export const { dataFetching, productEdit } = productsSlice.actions;
 export default productsSlice.reducer;

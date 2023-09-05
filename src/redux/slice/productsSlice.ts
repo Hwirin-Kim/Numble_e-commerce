@@ -47,8 +47,31 @@ const productsSlice = createSlice({
       state,
       action: PayloadAction<{ id: number; product: ProductType }>
     ) => {
-      const productId = action.payload;
-      console.log(action.payload.product);
+      const { id, product } = action.payload;
+
+      //스토어 데이터 변경
+      state.products = state.products.map((existingProduct) =>
+        existingProduct.product_no === id
+          ? { ...existingProduct, ...product }
+          : existingProduct
+      );
+
+      //로컬스토리지 데이터 변경
+      const JSONproducts = window.localStorage.getItem("products");
+
+      if (JSONproducts) {
+        const parsedProducts = JSON.parse(JSONproducts);
+        const updatedProducts = parsedProducts.map(
+          (localProduct: ProductType) =>
+            localProduct.product_no === id
+              ? { ...localProduct, ...product }
+              : localProduct
+        );
+        window.localStorage.setItem(
+          "products",
+          JSON.stringify(updatedProducts)
+        );
+      }
     },
   },
 });

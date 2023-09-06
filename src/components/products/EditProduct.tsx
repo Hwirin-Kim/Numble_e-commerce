@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useAppDispatch } from "../../redux/hooks/hooks";
@@ -21,9 +21,10 @@ export interface FormValue {
 
 interface EditProductProps {
   id: number;
+  closeModal: () => void;
 }
 
-export default function EditProduct({ id }: EditProductProps) {
+export default function EditProduct({ id, closeModal }: EditProductProps) {
   const dispatch = useAppDispatch();
   const {
     register,
@@ -170,7 +171,10 @@ export default function EditProduct({ id }: EditProductProps) {
           {...register("available_coupon")}
         />
         <StRadioLabel htmlFor="false">불가능</StRadioLabel>
-        <StButton>제출</StButton>
+        <StButtonWrap>
+          <StButton>제출</StButton>
+          <StButton onClick={closeModal}>닫기</StButton>
+        </StButtonWrap>
       </StForm>
     </StContainer>
   );
@@ -207,3 +211,9 @@ const StButton = styled.button``;
 const StRadioInput = styled.input``;
 
 const StRadioLabel = styled.label``;
+
+const StButtonWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;

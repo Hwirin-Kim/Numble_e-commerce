@@ -8,6 +8,8 @@ import { BsCartPlus } from "react-icons/bs";
 import { AiOutlineEdit } from "react-icons/ai";
 import Modal from "../UIelements/Modal";
 import EditProduct from "./EditProduct";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import { addCart } from "../../redux/slice/cartSlice";
 
 interface ProductProps {
   product: ProductType;
@@ -15,9 +17,12 @@ interface ProductProps {
 
 export default function Product({ product }: ProductProps) {
   const IMG_SIZE = "240px";
-  console.log(product);
+  const dispatch = useAppDispatch();
   const [editData, SetEditData] = useState(product);
   const [onEdit, setOnEdit] = useState(false);
+  const onClickAddCart = () => {
+    dispatch(addCart({ id: product.product_no, product: product }));
+  };
   return (
     <StContainer>
       <StImg src={product.main_image_url} size={IMG_SIZE} />
@@ -27,8 +32,8 @@ export default function Product({ product }: ProductProps) {
             {product.product_name}
           </StInfo>
           <StButtonWrap>
-            <BsCartPlus onClick={() => setOnEdit(true)} cursor="pointer" />
-            <AiOutlineEdit cursor="pointer" />
+            <BsCartPlus onClick={onClickAddCart} cursor="pointer" />
+            <AiOutlineEdit onClick={() => setOnEdit(true)} cursor="pointer" />
           </StButtonWrap>
         </StTitleWrap>
         <StInfo fontSize="1.1rem">
@@ -42,7 +47,10 @@ export default function Product({ product }: ProductProps) {
       </StInfoWrap>
       {onEdit && (
         <Modal closeModal={() => setOnEdit(false)}>
-          <EditProduct id={product.product_no} />
+          <EditProduct
+            id={product.product_no}
+            closeModal={() => setOnEdit(false)}
+          />
         </Modal>
       )}
     </StContainer>

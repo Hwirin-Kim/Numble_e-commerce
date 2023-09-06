@@ -3,7 +3,10 @@ import Router from "./router/Router";
 
 function App() {
   const JSONProducts = JSON.stringify(products);
-  window.localStorage.setItem("products", JSONProducts);
+  const localStorage = window.localStorage.getItem("products");
+  if (localStorage === null) {
+    window.localStorage.setItem("products", JSONProducts);
+  }
   return <Router />;
 }
 

@@ -45,9 +45,24 @@ const productsSlice = createSlice({
     },
     productEdit: (
       state,
-      action: PayloadAction<{ id: number; product: ProductType }>
+      action: PayloadAction<{
+        id: number;
+        product: ProductType;
+        closeModal: () => void;
+      }>
     ) => {
-      const { id, product } = action.payload;
+      const { id, product, closeModal } = action.payload;
+
+      // 이미 존재하는 상품 번호인지 확인
+      const isExistingProduct = state.products.some(
+        (existingProduct) => existingProduct.product_no === product.product_no
+      );
+
+      if (isExistingProduct && id !== product.product_no) {
+        alert("상품 번호를 변경하거나 다른 상품 번호를 선택하세요.");
+        closeModal();
+        return;
+      }
 
       //스토어 데이터 변경
       state.products = state.products.map((existingProduct) =>
@@ -72,6 +87,8 @@ const productsSlice = createSlice({
           JSON.stringify(updatedProducts)
         );
       }
+      alert("수정이 완료되었습니다.");
+      closeModal();
     },
   },
 });

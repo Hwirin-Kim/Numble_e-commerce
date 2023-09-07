@@ -1,12 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { devices } from "../../styles/devices";
 
 export default function NavLinks() {
   const navlinks = [
     {
       path: "/",
-      name: "상품 페이지",
+      name: "상품",
       className: "active",
     },
     {
@@ -16,7 +17,7 @@ export default function NavLinks() {
     },
     {
       path: "/user",
-      name: "유저 페이지",
+      name: "유저",
       className: "active",
     },
     {
@@ -52,11 +53,14 @@ const StContainer = styled.ul`
 const StItem = styled.li``;
 
 const StNavLink = styled(NavLink)`
-  font-size: 1.3rem;
+  font-size: 1rem;
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
   color: white;
   &.active {
     color: yellow;
+  }
+  @media ${devices.sm} {
+    font-size: 1.2rem;
   }
 `;

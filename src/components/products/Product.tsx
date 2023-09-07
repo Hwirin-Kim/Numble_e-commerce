@@ -10,6 +10,7 @@ import Modal from "../UIelements/Modal";
 import EditProduct from "./EditProduct";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { addCart } from "../../redux/slice/cartSlice";
+import { devices } from "../../styles/devices";
 
 interface ProductProps {
   product: ProductType;
@@ -18,7 +19,6 @@ interface ProductProps {
 export default function Product({ product }: ProductProps) {
   const IMG_SIZE = "240px";
   const dispatch = useAppDispatch();
-  const [editData, SetEditData] = useState(product);
   const [onEdit, setOnEdit] = useState(false);
   const onClickAddCart = () => {
     dispatch(addCart({ id: product.product_no, product: product }));
@@ -28,7 +28,7 @@ export default function Product({ product }: ProductProps) {
       <StImg src={product.main_image_url} size={IMG_SIZE} />
       <StInfoWrap>
         <StTitleWrap>
-          <StInfo bold={true} fontSize="1.5rem">
+          <StInfo $bold="true" $fontSize="1.5rem">
             {product.product_name}
           </StInfo>
           <StButtonWrap>
@@ -36,14 +36,16 @@ export default function Product({ product }: ProductProps) {
             <AiOutlineEdit onClick={() => setOnEdit(true)} cursor="pointer" />
           </StButtonWrap>
         </StTitleWrap>
-        <StInfo fontSize="1.1rem">
+        <StInfo $fontSize="1.2rem">{formatPrice(product.price)}</StInfo>
+        <StInfo $fontSize="1.1rem">
           예상 배송 기간 : {deliveryTime(product.prev_delivery_times)}일
         </StInfo>
-        <StInfo fontSize="1.2rem">{formatPrice(product.price)}</StInfo>
+
         <StInfo>
+          최대 구매 수량 :{" "}
           {product.maximum_quantity ? product.maximum_quantity : 1}
         </StInfo>
-        <StInfo fontSize="1.1rem">{product.description}</StInfo>
+        <StInfo $fontSize="1.1rem">{product.description}</StInfo>
       </StInfoWrap>
       {onEdit && (
         <Modal closeModal={() => setOnEdit(false)}>
@@ -59,8 +61,15 @@ export default function Product({ product }: ProductProps) {
 
 const StContainer = styled.div`
   border: 1px solid black;
+  padding: 0.5rem;
   width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media ${devices.lg} {
+    flex-direction: row;
+    align-items: start;
+  }
 `;
 
 const StImg = styled.img<{ size: string }>`
@@ -81,9 +90,9 @@ const StTitleWrap = styled.div`
   align-items: center;
 `;
 
-const StInfo = styled.p<{ bold?: boolean; fontSize?: string }>`
-  ${(props) => props.bold && "font-weight: bold"};
-  ${(props) => props.fontSize && `font-size: ${props.fontSize}`};
+const StInfo = styled.p<{ $bold?: string; $fontSize?: string }>`
+  ${(props) => props.$bold === "true" && "font-weight: bold"};
+  ${(props) => props.$fontSize && `font-size: ${props.$fontSize}`};
   margin-bottom: 0.5rem;
 `;
 

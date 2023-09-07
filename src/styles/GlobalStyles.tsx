@@ -27,6 +27,9 @@ const GlobalStyles = createGlobalStyle`
       padding: 0;
       cursor: pointer;
     }
+    html {
+      --color-btn :#1373EA;
+    }
 `;
 
 export default GlobalStyles;

@@ -1,6 +1,7 @@
 import React from "react";
 
 import styled from "styled-components";
+import { devices } from "../../styles/devices";
 import NavLinks from "./NavLinks";
 
 export default function MainNavigation() {
@@ -29,5 +30,8 @@ const StHeader = styled.header`
 
 const StLogo = styled.span`
   color: white;
-  font-size: 2rem;
+  font-size: 1.3rem;
+  @media ${devices.sm} {
+    font-size: 1.5rem;
+  }
 `;

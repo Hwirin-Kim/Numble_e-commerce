@@ -5,6 +5,7 @@ import Product from "../components/products/Product";
 
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { dataFetching } from "../redux/slice/productsSlice";
+import { devices } from "../styles/devices";
 
 export default function ProductsPage() {
   const [page, setPage] = useState(1);
@@ -42,6 +43,10 @@ const StContainer = styled.div`
 const StGrid = styled.div`
   margin: 0 auto;
   display: grid;
-  gap: 1rem 1rem;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media ${devices.sm} {
+    grid-template-columns: 1fr 1fr;
+  }
 `;

@@ -30,7 +30,7 @@ export default function Pagination({
           <StPageNumber
             key={item}
             onClick={() => onClickSetPage(item)}
-            isCurrentPage={item === currentPage}
+            $isCurrentPage={item === currentPage}
           >
             {item}
           </StPageNumber>
@@ -47,7 +47,7 @@ const StContainer = styled.div`
   margin-top: 2rem;
 `;
 
-const StPageNumber = styled.div<{ isCurrentPage: boolean }>`
+const StPageNumber = styled.div<{ $isCurrentPage: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,7 +56,7 @@ const StPageNumber = styled.div<{ isCurrentPage: boolean }>`
   height: 2rem;
   margin-right: 1rem;
   cursor: pointer;
-  ${(props) => props.isCurrentPage && "border-radius:50%"};
-  ${(props) => props.isCurrentPage && "background-color:black"};
-  ${(props) => props.isCurrentPage && "color:white"};
+  ${(props) => props.$isCurrentPage && "border-radius:50%"};
+  ${(props) => props.$isCurrentPage && "background-color:black"};
+  ${(props) => props.$isCurrentPage && "color:white"};
 `;
